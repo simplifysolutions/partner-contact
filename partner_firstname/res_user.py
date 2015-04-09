@@ -17,7 +17,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import orm
+from openerp.osv import orm, osv
 from openerp.tools.translate import _
 
 
@@ -41,3 +41,15 @@ class ResUsers(orm.Model):
                 del(default['name'])
         return super(ResUsers, self).copy_data(
             cr, uid, _id, default, context=context)
+
+class res_users(osv.osv):
+    _inherit = 'res.users'
+    
+    def onchange_lastname(self, cr, uid, ids, firstname="", lastname=""):
+        values = {}
+        values['name'] = firstname + lastname
+        return {'value': values}
+    
+    
+     
+
